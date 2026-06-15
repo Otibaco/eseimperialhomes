@@ -1,13 +1,14 @@
+'use client'
 import React from "react";
 import {MessageSquare,X,Compass,Sparkles,Send,ChevronDown,Menu,Bot,HelpCircle,Clock,Plus} from "lucide-react";
 import { Message } from "@/types/types";
 import { AnimatePresence, motion } from "framer-motion";
 
-interface AIAssistantProps {
-    onSelectPropertyByTitle: (title: string) => void;
-}
+// interface AIAssistantProps {
+//     onSelectPropertyByTitle: (title: string) => void;
+// }
 
-export default function AIAssistant({ onSelectPropertyByTitle }: AIAssistantProps) {
+export default function AIAssistant() {
     const [isOpen, setIsOpen] = React.useState(false);
     const [messages, setMessages] = React.useState<Message[]>([
         {

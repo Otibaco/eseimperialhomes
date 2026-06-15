@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react'
 import PropertyCard from '../property/PropertyCard';
 import Navbar from './Navbar';
+import AIAssistant from '../ai/AIAssistant';
 
 export default function Homepage() {
     const [properties, setProperties] = React.useState<Property[]>([]);

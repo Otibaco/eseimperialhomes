@@ -7,6 +7,7 @@ import { Playfair_Display } from "next/font/google";
 import { JetBrains_Mono } from "next/font/google";
 import Navbar from "@/components/marketing/Navbar";
 import Footer from "@/components/marketing/Footer";
+import AIAssistant from "@/components/ai/AIAssistant";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -51,6 +52,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
+        <AIAssistant />
         <Footer />
       </body>
     </html>
