@@ -4,9 +4,6 @@ import {MessageSquare,X,Compass,Sparkles,Send,ChevronDown,Menu,Bot,HelpCircle,Cl
 import { Message } from "@/types/types";
 import { AnimatePresence, motion } from "framer-motion";
 
-// interface AIAssistantProps {
-//     onSelectPropertyByTitle: (title: string) => void;
-// }
 
 export default function AIAssistant() {
     const [isOpen, setIsOpen] = React.useState(false);

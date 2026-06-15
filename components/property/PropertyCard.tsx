@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 import { Bed, Bath, Move, MapPin, Eye, Compass, Pin, CheckCircle2 } from "lucide-react";
 import { Property, CurrencyType, CURRENCY_SYMBOLS, CURRENCY_CONVERSIONS } from "@/types/types";
 import { motion } from "framer-motion";
@@ -19,6 +20,7 @@ export default function PropertyCard({
   isCompared = false,
   onCompareToggle
 }: PropertyCardProps) {
+  const router = useRouter();
   // Convert price dynamically
   const conversionRate = CURRENCY_CONVERSIONS[currency];
   const convertedPrice = Math.round(property.price * conversionRate);
@@ -151,7 +153,12 @@ export default function PropertyCard({
           </div>
 
           <button
-            onClick={() => onSelect(property)}
+            onClick={() => {
+              // keep backward-compat: call onSelect if provided, but navigate to property page using slug when available
+              if (onSelect) onSelect(property);
+              const target = property.slug ? property.slug : property.id;
+              router.push(`/properties/${encodeURIComponent(target)}`);
+            }}
             id={`view-property-details-${property.id}`}
             className="bg-clay hover:bg-primary-gold text-marble hover:text-clay px-4.5 py-2.5 text-[10px] font-mono uppercase tracking-widest font-semibold rounded-xs transition-all duration-300 flex items-center space-x-2 cursor-pointer active:scale-95"
           >

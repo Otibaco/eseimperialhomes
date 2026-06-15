@@ -4,11 +4,16 @@ import { CurrencyType, FilterState, Property } from "@/types/types";
 import Filters from "../property/PropertyFilters";
 import { Compass } from "lucide-react";
 import PropertyCard from "../property/PropertyCard";
+// Property details are now full pages at /properties/[slug]
+import { useRouter } from "next/navigation";
+import { PropertyComparisonDrawer } from "@/components/property/PropertyComparison";
+import { MOCK_PROPERTIES } from "@/lib/mockProperties";
 
 export default function Propertiespage() {
     const [currency, setCurrency] = React.useState<CurrencyType>("NGN");
     const [loading, setLoading] = React.useState(true);
-    const [selectedProperty, setSelectedProperty] = React.useState<Property | null>(null);
+    const router = useRouter();
+    // Tours handled via dedicated route pages; no local modal state needed
     const [comparedProperties, setComparedProperties] = React.useState<Property[]>([]);
     const [properties, setProperties] = React.useState<Property[]>([]);
 
@@ -82,6 +87,32 @@ export default function Propertiespage() {
             return [...prev, property];
         });
     };
+    React.useEffect(() => {
+        let mounted = true;
+        async function load() {
+            try {
+                setLoading(true);
+                const res = await fetch('/api/properties');
+                if (!mounted) return;
+                if (res.ok) {
+                    const data = await res.json();
+                    setProperties(data);
+                } else {
+                    // Fallback to mock data
+                    setProperties(MOCK_PROPERTIES);
+                }
+            } catch (err) {
+                console.error('Error loading properties, using mock data', err);
+                // Fallback to mock data
+                setProperties(MOCK_PROPERTIES);
+            } finally {
+                if (mounted) setLoading(false);
+            }
+        }
+        load();
+        return () => { mounted = false; };
+    }, []);
+
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 animate-fade-in" id="catalog-screen-view">
 
@@ -93,7 +124,7 @@ export default function Propertiespage() {
                     Ese Imperial Signature Catalog
                 </h1>
                 <p className="text-xs text-clay/55 font-mono max-w-2xl leading-relaxed">
-                    Filter list items with high-precision metrics including country hubs, minimum bedrooms, status options, and price bounds converted dynamically in NGN, USD, GBP, or AED.
+                    Filter list items with high-precision metrics including country hubs, minimum bedrooms, status options, and price bounds converted dynamically in NGN.
                 </p>
             </div>
 
@@ -142,13 +173,37 @@ export default function Propertiespage() {
                             key={prop.id}
                             property={prop}
                             currency={currency}
-                            onSelect={(property) => setSelectedProperty(property)}
+                            onSelect={(property) => {
+                                const target = property.slug ? property.slug : property.id;
+                                router.push(`/properties/${encodeURIComponent(target)}`);
+                            }}
                             isCompared={comparedProperties.some((p) => p.id === prop.id)}
                             onCompareToggle={handleCompareToggle}
                         />
                     ))}
                 </div>
             )}
+
+            {/* VIRTUAL TOUR VIEWPORT DIALOG ROOT */}
+            {/* {activeTourProperty && activeTourProperty.virtualTour && (
+                <VirtualTourViewer
+                    scenes={activeTourProperty.virtualTour}
+                    propertyName={activeTourProperty.title}
+                    onClose={() => setActiveTourProperty(null)}
+                />
+            )} */}
+
+            {/* SIDE-BY-SIDE PROPERTY MATRIX SYSTEM */}
+            <PropertyComparisonDrawer
+                comparedProperties={comparedProperties}
+                onRemove={(p) => setComparedProperties((prev) => prev.filter((item) => item.id !== p.id))}
+                onClearAll={() => setComparedProperties([])}
+                currency={currency}
+                    onSelect={(p) => {
+                        const target = p.slug ? p.slug : p.id;
+                        router.push(`/properties/${encodeURIComponent(target)}`);
+                    }}
+            />
 
         </div>
     )

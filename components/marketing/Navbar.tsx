@@ -19,14 +19,7 @@ export default function Navbar() {
       name: "Properties",
       href: "/properties",
     },
-    {
-      name: "Compare",
-      href: "/compare",
-    },
-    {
-      name: "Contact",
-      href: "/contact",
-    },
+
   ];
 
   const isActive = (href: string) => {

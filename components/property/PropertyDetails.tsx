@@ -4,19 +4,17 @@ import { X, Bed, Bath, Move, MapPin, ShieldAlert, PhoneCall, Compass, Calendar,M
 import { Property, CurrencyType, CURRENCY_SYMBOLS, CURRENCY_CONVERSIONS } from "@/types/types";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface PropertyDetailsModalProps {
+interface PropertyDetailsProps {
   property: Property;
   currency: CurrencyType;
-  onClose: () => void;
   onLaunchTour: (property: Property) => void;
 }
 
-export default function PropertyDetailsModal({ 
+export default function PropertyDetails({ 
   property, 
   currency, 
-  onClose, 
   onLaunchTour 
-}: PropertyDetailsModalProps) {
+}: PropertyDetailsProps) {
   const [activeImageIdx, setActiveImageIdx] = React.useState(0);
   
   // Booking Form State
@@ -85,32 +83,12 @@ export default function PropertyDetailsModal({
   };
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-clay/70 backdrop-blur-md z-40 flex items-center justify-center p-4 overflow-y-auto" 
-      id="property-details-backdrop"
-    >
-      
-      {/* Modal Card */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95, y: 30 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 30 }}
-        transition={{ type: "spring", damping: 25, stiffness: 350 }}
-        className="bg-marble border border-clay/15 rounded-sm shadow-2xl w-full max-w-6xl max-h-[92vh] overflow-y-auto flex flex-col md:flex-row relative" 
+      <motion.div
+        className="bg-marble border border-clay/15 rounded-sm shadow-2xl w-full overflow-y-auto flex flex-col md:flex-row relative"
         id="property-details-container"
       >
         
-        {/* Close Button top corner */}
-        <button
-          onClick={onClose}
-          id="close-details-modal-btn"
-          className="absolute top-4 right-4 z-10 p-2 bg-clay text-marble rounded-full hover:bg-primary-gold hover:text-clay cursor-pointer duration-150 shadow-md"
-        >
-          <X className="h-5 w-5" />
-        </button>
+        {/* Top corner actions (kept minimal for page) */}
 
         {/* Left half: Imagery Gallery, Detailed Spec */}
         <div className="md:w-3/5 p-6 md:p-8 space-y-6 border-r border-clay/10 overflow-y-auto max-h-[85vh]">
@@ -263,7 +241,7 @@ export default function PropertyDetailsModal({
               
               <button
                 onClick={() => onLaunchTour(property)}
-                id="modal-launch-tour-btn"
+                id="page-launch-tour-btn"
                 className="w-full bg-primary-gold hover:bg-primary-gold-focus text-clay py-2.5 px-4 text-xs font-mono font-bold uppercase tracking-widest rounded-xs flex items-center justify-center space-x-2 transition-colors cursor-pointer shadow-lg"
               >
                 <Compass className="h-4 w-4" />
@@ -505,6 +483,5 @@ export default function PropertyDetailsModal({
 
       </motion.div>
 
-    </motion.div>
   );
 }

@@ -6,16 +6,45 @@ import React from 'react'
 import PropertyCard from '../property/PropertyCard';
 import Navbar from './Navbar';
 import AIAssistant from '../ai/AIAssistant';
+// Property details are now full pages at /properties/[slug]
+import { PropertyComparisonDrawer } from '@/components/property/PropertyComparison';
+import { MOCK_PROPERTIES } from '@/lib/mockProperties';
 
 export default function Homepage() {
     const [properties, setProperties] = React.useState<Property[]>([]);
-    // Selection
-    const [selectedProperty, setSelectedProperty] = React.useState<Property | null>(null);
+    // No modal selection — navigate to property pages instead
 
     // Selected properties for side-by-side comparison
     const [comparedProperties, setComparedProperties] = React.useState<Property[]>([]);
     const [loading, setLoading] = React.useState(true);
     const router = useRouter();
+
+    // Load properties on mount
+    React.useEffect(() => {
+        let mounted = true;
+        async function load() {
+            try {
+                setLoading(true);
+                const res = await fetch('/api/properties');
+                if (!mounted) return;
+                if (res.ok) {
+                    const data = await res.json();
+                    setProperties(data);
+                } else {
+                    // Fallback to mock data
+                    setProperties(MOCK_PROPERTIES);
+                }
+            } catch (err) {
+                console.error('Error loading properties, using mock data', err);
+                // Fallback to mock data
+                setProperties(MOCK_PROPERTIES);
+            } finally {
+                if (mounted) setLoading(false);
+            }
+        }
+        load();
+        return () => { mounted = false; };
+    }, []);
 
     const featuredProperties = React.useMemo(() => {
         return properties.filter(p => p.featured === true);
@@ -197,7 +226,10 @@ export default function Homepage() {
                                 key={prop.id}
                                 property={prop}
                                 currency={currency}
-                                onSelect={(property) => setSelectedProperty(property)}
+                                onSelect={(property) => {
+                                    const target = property.slug ? property.slug : property.id;
+                                    router.push(`/properties/${encodeURIComponent(target)}`);
+                                }}
                                 isCompared={comparedProperties.some((p) => p.id === prop.id)}
                                 onCompareToggle={handleCompareToggle}
                             />
@@ -285,6 +317,20 @@ export default function Homepage() {
                     </div>
                 </div>
             </div>
+
+            {/* Property details moved to pages. Navigate to /properties/[slug] for details and /properties/[slug]/tour for tours. */}
+
+            {/* SIDE-BY-SIDE PROPERTY MATRIX SYSTEM */}
+            <PropertyComparisonDrawer
+                comparedProperties={comparedProperties}
+                onRemove={(p) => setComparedProperties((prev) => prev.filter((item) => item.id !== p.id))}
+                onClearAll={() => setComparedProperties([])}
+                currency={currency}
+                onSelect={(p) => {
+                    const target = p.slug ? p.slug : p.id;
+                    router.push(`/properties/${encodeURIComponent(target)}`);
+                }}
+            />
 
         </div>
     )
