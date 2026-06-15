@@ -5,6 +5,8 @@ import { Inter } from "next/font/google";
 import { Outfit } from "next/font/google";
 import { Playfair_Display } from "next/font/google";
 import { JetBrains_Mono } from "next/font/google";
+import Navbar from "@/components/marketing/Navbar";
+import Footer from "@/components/marketing/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -46,7 +48,11 @@ export default function RootLayout({
         ${jetbrains.variable}
       `}
     >
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

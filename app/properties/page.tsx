@@ -5,9 +5,7 @@ import Propertiespage from "@/components/marketing/Propertiespage";
 export default function page() {
   return (
     <>
-    <Navbar />
     <Propertiespage />
-    <Footer />
     </>
   )
 }
