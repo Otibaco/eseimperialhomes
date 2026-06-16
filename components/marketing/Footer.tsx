@@ -158,7 +158,7 @@ export default function Footer() {
                             <span className="text-primary-gold font-bold uppercase block">London Hub</span>
                             <span className="block text-white/50 leading-normal">
                                 8 Belgrave Square,<br />
-                                Belgravia, London SW1X, UK<br />
+                                Maitama, Abuja SW1X, UK<br />
                                 +44 7700 900077
                             </span>
                         </div>

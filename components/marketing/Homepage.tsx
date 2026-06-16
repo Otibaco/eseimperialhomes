@@ -91,7 +91,7 @@ export default function Homepage() {
                     </div>
 
                     <p className="font-sans text-xs sm:text-sm text-marble/85 leading-relaxed max-w-2xl mx-auto font-mono uppercase tracking-wider">
-                        Representing the absolute crown of high-security luxury estates in Nigeria, London, and Dubai.
+                        Representing the absolute crown of high-security luxury estates in Nigeria.
                     </p>
 
                     <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -154,13 +154,13 @@ export default function Homepage() {
                     <div className="relative aspect-4/3 rounded-xs overflow-hidden group shadow-lg border border-clay/5">
                         <img
                             src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80"
-                            alt="London Stately"
+                            alt="Maitama Stately"
                             referrerPolicy="no-referrer"
                             className="w-full h-full object-cover brightness-[0.55] group-hover:scale-105 duration-300 transition-transform"
                         />
                         <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
                             <span className="text-primary-gold font-mono text-[9px] uppercase tracking-widest">UK Market</span>
-                            <h3 className="font-display text-lg uppercase font-semibold">Belgravia, London</h3>
+                            <h3 className="font-display text-lg uppercase font-semibold">Maitama, Abuja</h3>
                             <p className="text-[11px] text-marble/70 font-sans mt-2 leading-relaxed">
                                 Grade II listed heritage Georgian squares representing extreme preservation and bespoke luxury elevators in prime European circles.
                             </p>
@@ -171,13 +171,13 @@ export default function Homepage() {
                     <div className="relative aspect-4/3 rounded-xs overflow-hidden group shadow-lg border border-clay/5">
                         <img
                             src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80"
-                            alt="Dubai Views"
+                            alt="Woji Views"
                             referrerPolicy="no-referrer"
                             className="w-full h-full object-cover brightness-[0.55] group-hover:scale-105 duration-300 transition-transform"
                         />
                         <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
                             <span className="text-primary-gold font-mono text-[9px] uppercase tracking-widest">Middle East</span>
-                            <h3 className="font-display text-lg uppercase font-semibold">Downtown Dubai</h3>
+                            <h3 className="font-display text-lg uppercase font-semibold">Woji, Port Harcourt</h3>
                             <p className="text-[11px] text-marble/70 font-sans mt-2 leading-relaxed">
                                 Skyline topping luxury duplex penthouses, soaring high above standard clouds with panoramic water-show viewing terraces.
                             </p>
